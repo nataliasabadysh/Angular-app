@@ -1,7 +1,10 @@
 import { Component} from '@angular/core';
-// import {__values} from "tslib";
-// import deleteProperty = Reflect.deleteProperty;
+import deleteProperty = Reflect.deleteProperty;
 
+interface User{
+  name:string,
+  email:string
+}
 @Component({
   selector: 'app-form-events',
   templateUrl: './form-events.component.html',
@@ -10,25 +13,34 @@ import { Component} from '@angular/core';
 
 export class FormEventsComponent {
 
-  text:string;
-  userName:string;
-  users:string[] = []; // массив
+  user:User = {
+    name:"",
+    email: ""
+  };
 
+  users:User[]= [
+    {
+      name:'Natasha',
+      email: "test@test"
+    },
+    {
+      name:'Denis',
+      email: "test@test"
+    }
+];
   constructor() { }
 
-  formEvent(e){
-    console.log(e);
-    this.text = e.target.value;
-  }
 
-  onSubmit(){
-    this.users.push(this.userName);
-    console.log(this.users);
-    // this.userName = '';
-  }
+    onSubmit(form){
+      console.log(this.user);
+      this.users.push({
+        name: this.user.name,
+        email: this.user.email
+      });
 
- removeUser(i){
-    console.log(i);
-    this.users.splice(i);
- }
+      form.resetForm();
+    }
+    removeUser(i){
+      this.users.splice(i,1);
+    }
 }
